@@ -22,6 +22,9 @@ class Hero(Character):
         if enemy.health <= 0:
             print "The goblin is dead."
 
+    def be_awesome(self):
+        print "I am a hero and therefore I am awesome!"
+
     def print_status(self):
         print "You have %d health and %d power." % (self.health, self.power)
 
