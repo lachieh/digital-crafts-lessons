@@ -4,6 +4,9 @@ example changes
 """
 
 class Character(object):
+    def die(self):
+        self.health = 0
+
     def alive(self):
         if self.health > 0:
             return True
