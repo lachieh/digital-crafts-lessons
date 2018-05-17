@@ -38,6 +38,13 @@ app.get('/contact/:id', (request, response) => {
 app.post('/new', (request, response) => {
     fs.readFile('contacts.json', (err, data) => {
         if (err) { return console.log(err) }
+        if (
+            !request.body.first_name ||
+            !request.body.last_name ||
+            !request.body.email
+        ) {
+            response.send('Error: missing fields');
+        }
         let contacts = JSON.parse(data);
         let newId = contacts.length + 1;
         let newContact = {

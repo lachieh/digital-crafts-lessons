@@ -2,24 +2,25 @@ const express = require('express');
 const util = require('util');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const app = express();
-
-app.use(bodyParser.urlencoded({ extended: false }));
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
-app.get('/', (request, response) => {
-    readFile('data.json')
+const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.get('/api/blog', (request, response) => {
+    readFile('blog-data.json')
         .then((data) => {
             response.json(JSON.parse(data));
         });
 });
 
-app.get('/:id', (request, response) => {
+app.get('/api/blog/:id', (request, response) => {
     const id = Number(request.params.id);
 
-    readFile('data.json')
+    readFile('blog-data.json')
         .then((data) => {
             const blogData = JSON.parse(data)
             if (blogData[id]) {
@@ -30,8 +31,8 @@ app.get('/:id', (request, response) => {
         });
 });
 
-app.post('/', (request, response) => {
-    readFile('data.json')
+app.post('/api/new', (request, response) => {
+    readFile('blog-data.json')
         .then((data) => {
             return JSON.parse(data);
         })
@@ -46,7 +47,7 @@ app.post('/', (request, response) => {
             };
             data[id] = newEntry;
 
-            return writeFile('data.json', JSON.stringify(data, null, '\t'))
+            return writeFile('blog-data.json', JSON.stringify(data, null, '\t'))
                 .then(() => {
                     return newEntry;
                 });
