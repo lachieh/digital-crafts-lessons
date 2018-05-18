@@ -3,19 +3,22 @@ let socket = io();
 let btnSend = document.getElementById("btnSend")
 let chatMessageTextBox = document.getElementById("chatMessageTextBox")
 let chatMessagesList = document.getElementById("chatMessagesList")
+let usernameTextBox = document.getElementById("username")
 
 btnSend.addEventListener('click',function(){
 
-  let message = chatMessageTextBox.value
+  let messageObject = {
+    message: chatMessageTextBox.value,
+    username: usernameTextBox.value,
+  }
   // emit means sending to the channel/room
-  socket.emit('digitalcrafts2018',message)
-
+  socket.emit('message', messageObject)
 })
 
 // listening to that channel
-socket.on('digitalcrafts2018',function(message){
+socket.on('message',function(messageObject){
   let chatMessageLI = document.createElement("li")
-  chatMessageLI.innerHTML = message
+  chatMessageLI.innerHTML = messageObject.username + ': ' + messageObject.message
   chatMessagesList.appendChild(chatMessageLI)
 })
 

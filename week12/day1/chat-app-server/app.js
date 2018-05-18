@@ -12,16 +12,10 @@ app.use(express.static('public'))
 io.on('connection', function(socket) {
   console.log('a user has connected')
 
-  socket.on('digitalcrafts2018', function(message){
-    console.log(message)
-    io.emit('digitalcrafts2018',message)
+  socket.on('message', function(messageObject){
+    console.log(messageObject)
+    io.emit('message',messageObject)
   })
-
-  /*
-  socket.on('chat message', function(msg){
-    console.log(msg)
-    io.emit('chat message',msg)
-  }) */
 })
 
 http.listen(3000, function(){

@@ -8,6 +8,7 @@ const writeFile = util.promisify(fs.writeFile);
 
 const app = express();
 
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/api/blog', (request, response) => {
